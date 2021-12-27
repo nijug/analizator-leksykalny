@@ -2,7 +2,7 @@
 #include <stdlib.h> // exit - ale exit trzeba kiedyś usunąć i nie będzie to potrzebne
 #include "alex.h"       // analizator leksykalny
 #include "fun_stack.h"  // stos funkcji
-
+#include "data.h" //przechowywanie danych
 #define MAXINDENTLENGHT 256     // maks długość identyfikatora
 
 void
@@ -13,7 +13,7 @@ analizatorSkladni (char *inpname)
 
   int nbra = 0;   // bilans nawiasów klamrowych {}
   int npar = 0;   // bilans nawiasów zwykłych ()
-
+  int pocz = 0;
   alex_init4file (in);          // ustaw analizator leksykalny, aby czytał in
 
   lexem_t lex;
@@ -22,6 +22,7 @@ analizatorSkladni (char *inpname)
   while (lex != EOFILE) {
     switch (lex) {
     case IDENT:{
+        pocz = alex_getLN();
         char *iname = alex_ident ();   // zapamiętaj identyfikator i patrz co dalej
         lexem_t nlex = alex_nextLexem ();
         if (nlex == OPEPAR) {   // nawias otwierający - to zapewne funkcja
@@ -45,7 +46,7 @@ analizatorSkladni (char *inpname)
                                                 // za identyfikatorem znajdującym się na wierzchołku stosu
           lexem_t nlex = alex_nextLexem ();     // bierzemy nast leksem
           if (nlex == OPEBRA)   // nast. leksem to klamra a więc mamy do czynienia z def. funkcji
-            store_add_def (get_from_fun_stack (), alex_getLN (), inpname);
+            store_add_def (get_from_fun_stack (), pocz ,alex_getLN (), inpname);
           else if (nbra == 0)   // nast. leksem to nie { i jesteśmy poza blokami - to musi być prototyp
             store_add_proto (get_from_fun_stack (), alex_getLN (), inpname);
           else                  // nast. leksem to nie { i jesteśmy wewnątrz bloku - to zapewne wywołanie

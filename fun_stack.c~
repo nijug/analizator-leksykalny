@@ -45,7 +45,7 @@ char *get_from_fun_stack( void )
 
 int top_of_funstack( void ) // zwraca par_level - "zagłębienie nawiasowe" przechowywane na szczycie
 {
-	printf("%d stack pair level", top->pair_lvl);
+	printf("%d stack pair level\n", top->pair_lvl);
 	return top->pair_lvl;
 }
 

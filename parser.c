@@ -1,13 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h> // exit - ale exit trzeba kiedyś usunąć i nie będzie to potrzebne
-#include "alex.h"       // analizator leksykalny
-#include "fun_stack.h"  // stos funkcji
-#include "data.h" //przechowywanie danych
-#define MAXINDENTLENGHT 256     // maks długość identyfikatora
+#include "parser.h"
 
 void
 analizatorSkladni (char *inpname)
-{                               // przetwarza plik inpname
+{                             
 
   FILE *in = fopen (inpname, "r");
 
@@ -64,7 +59,7 @@ analizatorSkladni (char *inpname)
     case ERROR:{
         fprintf (stderr, "\nBUUUUUUUUUUUUUUUUUUUUUU!\n"
                  "W pliku %s (linia %d) są błędy składni.\n"
-                 "Kończę!\n\n", inpname, alex_getNL ());
+                 "Kończę!\n\n", inpname, alex_getLN ());
         exit (1);               // to nie jest najlepsze, ale jest proste ;-)
       }
       break;
@@ -72,5 +67,6 @@ analizatorSkladni (char *inpname)
       break;
     }
     lex = alex_nextLexem ();
-  }
+  
+}
 }

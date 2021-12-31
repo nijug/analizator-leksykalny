@@ -1,8 +1,9 @@
-a.out: main.o data.o alex.o parser.o
+a.out: main.o data.o fun_stack.o alex.o parser.o
 		$(CC) $^
 
-main.o:
+main.o: data.h
 data.o: data.h
+fun_stack.o: fun_stack.h
 alex.o: alex.h
-parser.o: alex.h fun_stack.h data.h
+parser.o: parser.h
 	

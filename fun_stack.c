@@ -33,18 +33,34 @@ void put_on_fun_stack( int par_level, char *funame )
 
 char *get_from_fun_stack( void )
 {
-	char *funame = top->fun_name;
-	stack_t tmp = malloc( sizeof *tmp);
-	tmp = top;
-	top = top->next;
-	free(tmp);
-	printf("%s name poped from stack\n", funame);
+	if( top == NULL )
+	{
+		printf("Błąd pobierania danych, stos obecnie jest pusty\n");
+		return NULL;
+	}
+	else
+	{
+		char *funame = top->fun_name;
+		stack_t tmp = malloc( sizeof *tmp);
+		tmp = top;
+		top = top->next;
+		free(tmp);
+		printf("%s name poped from stack\n", funame);
 
-	return funame;
+		return funame;
+	}
 }
 
 int top_of_funstack( void )
 {
-	printf("%d stack pair level\n", top->pair_lvl);
-	return top->pair_lvl;
+	if( top == NULL )
+	{
+		printf("Błąd pobierania danych, stos obecnie jest pusty\n");
+		return EXIT_FAILURE;
+	}
+	else
+	{
+		printf("%d stack pair level\n", top->pair_lvl);
+		return top->pair_lvl;
+	}
 }

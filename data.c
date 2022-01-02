@@ -2,9 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 //0 dla prototypu
 // 1 dla definicji
 // 2 dla call
+
+
 int exist(char* word) //zwraca indeks jesli nazwa jest zapina, -1 jesli nie jest
 {
 	for (int i = 0; i < data_size; i++)
@@ -23,7 +26,7 @@ int find_def(char* word)
 
 	return -1;
 }
-int counter_exist(char* word, pair* counter, int counter_size) 
+int counter_exist(char* word, pair counter[100], int counter_size) 
 {
 	for (int i = 0; i < counter_size; i++)
 	{
@@ -120,7 +123,7 @@ void write_data() // dane przechowywane globalnie, wystarczy wywolac funkcje na 
 	for (int i = 0; i < data_size; i++)
 	{
 		if (all_data[i].def_f == NULL)
-			continue; // jesli funkcja nie ma definicji jest funkjc¹ wbudowan¹- nie nalezy wyswieltac
+			continue; // jesli funkcja nie ma definicji jest funkjcï¿½ wbudowanï¿½- nie nalezy wyswieltac
 		printf("Funkcja %s:\n", all_data[i].name);
 		
 		printf(" Prototyp:\n");
@@ -178,14 +181,11 @@ void write_data() // dane przechowywane globalnie, wystarczy wywolac funkcje na 
 				else
 					printf("%s (%d razy)\n", counter[j].names, counter[j].type);
 				}
-				free(counter);	
+				
 			}
 			
 		}
-		free(all_data[i].call_f);
-		free(all_data[i].call_l);
+	
 	}
-	free(all_data);
-	free(history);
-		
+	
 }

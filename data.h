@@ -1,3 +1,5 @@
+#ifndef _DATA_H_
+#define _DATA_H_
 #include <stdio.h>
 #include <stdlib.h>
 // przechowuje nazwe funkcji oraz informacje o prototypie, definicji i wywolaniach
@@ -19,17 +21,17 @@ typedef struct {
 	int type;
 } pair;
 
-
 extern store all_data [100];
-extern int data_size = 0;
+extern int data_size;
 extern pair history [100];
-extern int history_size = 0;
+extern int history_size;
 
 int exist(char* word);
 int find_def(char* word);
-int counter_exist(char* word, pair* counter, int counter_size);
+int counter_exist(char* word, pair counter[100], int counter_size);
 void create(char* fun_name);
 void store_add_proto(char* fun_name, int line, char* file);
 void store_add_call(char* fun_name, int line, char* file);
 void store_add_def(char* fun_name, int line_s, int line_e, char* file);
 void write_data();
+#endif

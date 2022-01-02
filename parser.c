@@ -1,7 +1,6 @@
 #include "parser.h"
 
-void
-analizatorSkladni (char *inpname)
+void analizatorSkladni (char *inpname) 
 {                             
 
   FILE *in = fopen (inpname, "r");
@@ -68,5 +67,5 @@ analizatorSkladni (char *inpname)
     }
     lex = alex_nextLexem ();
   
-}
+ }
 }

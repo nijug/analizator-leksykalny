@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include"fun_stack.h"
+#include "fun_stack.h"
 
 typedef struct stack_node {
 	int pair_lvl;
@@ -9,6 +9,8 @@ typedef struct stack_node {
 } *stack_t;
 
 stack_t top;
+
+
 
 void put_on_fun_stack( int par_level, char *funame )
 {

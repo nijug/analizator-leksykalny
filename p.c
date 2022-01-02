@@ -1,7 +1,7 @@
-int fa(int);
-int fb(int);
+int fa (int);
+int fb (int);
 
-int main() {
+int main () {
 	int i = 5;
 	printf("funkcjaa(%i)=%i", i, fa(i));
 	printf("funkcjab(%i)=%i", i, fb(i));
@@ -10,7 +10,7 @@ int main() {
 	return 0;
 }
 
-int fb(int x) {
+int fb (int x) {
 	x = fc(x);
 	return 2 * fa(x);
 }

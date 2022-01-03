@@ -15,11 +15,11 @@ stack_t top;
 
 void put_on_fun_stack( int par_level, char *funame )
 {
+	char *funcopy = malloc( (strlen(funame)+1) * sizeof (char));
+	strcpy(funcopy, funame);
+
 	if( top == NULL)
 	{
-		char *funcopy = malloc( (strlen(funame)+1) * sizeof (char));
-		strcpy(funcopy, funame);
-
 		top = malloc( sizeof *top);
 		top->pair_lvl = par_level;
 		top->fun_name = funcopy;

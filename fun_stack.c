@@ -1,6 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include "fun_stack.h"
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include "fun_stack.h"
 
 typedef struct stack_node {
 	int pair_lvl;
@@ -14,11 +18,16 @@ stack_t top;
 
 void put_on_fun_stack( int par_level, char *funame )
 {
+    char *funcopy = malloc( (strlen(funame)+1) * sizeof (char));
+		strcpy(funcopy, funame);
+
 	if( top == NULL)
 	{
+		
 		top = malloc( sizeof *top);
 		top->pair_lvl = par_level;
-		top->fun_name = funame;
+		top->fun_name = funcopy;
+		top->next = NULL;
 		printf("new stack initialized\n");
 		printf("%s new name pushed to stack\n", top->fun_name);
 	}
@@ -26,7 +35,7 @@ void put_on_fun_stack( int par_level, char *funame )
 	{
 		stack_t tmp = malloc( sizeof *tmp);
 		tmp->pair_lvl = par_level;
-		tmp->fun_name = funame;
+		tmp->fun_name = funcopy;
 		tmp->next = top;
 		top = tmp;
 		printf("%s new name pushed to stack\n", top->fun_name);
@@ -43,8 +52,7 @@ char *get_from_fun_stack( void )
 	else
 	{
 		char *funame = top->fun_name;
-		stack_t tmp = malloc( sizeof *tmp);
-		tmp = top;
+		stack_t tmp = top;
 		top = top->next;
 		free(tmp);
 		printf("%s name poped from stack\n", funame);

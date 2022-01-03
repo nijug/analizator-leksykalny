@@ -1,11 +1,8 @@
-#ifndef _PARSER_H_
-#define _PARSER_H_
 #include <stdio.h>
-#include <stdlib.h> // exit - ale exit trzeba kiedyś usunąć i nie będzie to potrzebne
-#include "alex.h"       // analizator leksykalny
-#include "fun_stack.h"  // stos funkcji
-#include "data.h" //przechowywanie danych
-#define MAXINDENTLENGHT 256     // maks długość identyfikatora
+#include <stdlib.h>		
+#include "alex.h"		
+#include "fun_stack.h"		
+#include "data.h"	
+#define MAXINDENTLENGHT 256	
 
 void analizatorSkladni (char *inpname);
-#endif

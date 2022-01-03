@@ -21,14 +21,9 @@ typedef struct {
 	int type;
 } pair;
 
-extern store all_data [100];
-extern int data_size;
-extern pair history [100];
-extern int history_size;
-
 int exist(char* word);
 int find_def(char* word);
-int counter_exist(char* word, pair counter[100], int counter_size);
+int counter_exist(char* word, pair *counter, int counter_size);
 void create(char* fun_name);
 void store_add_proto(char* fun_name, int line, char* file);
 void store_add_call(char* fun_name, int line, char* file);

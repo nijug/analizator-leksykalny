@@ -6,7 +6,10 @@
 //0 dla prototypu
 // 1 dla definicji
 // 2 dla call
-
+static store all_data [100];
+static int data_size=0;
+static pair history [100];
+static int history_size=0;
 
 int exist(char* word) //zwraca indeks jesli nazwa jest zapina, -1 jesli nie jest
 {
@@ -26,7 +29,7 @@ int find_def(char* word)
 
 	return -1;
 }
-int counter_exist(char* word, pair counter[100], int counter_size) 
+int counter_exist(char* word, pair *counter, int counter_size) 
 {
 	for (int i = 0; i < counter_size; i++)
 	{
@@ -40,17 +43,15 @@ void create(char* fun_name)
 	store temp;
 	temp.name= fun_name;
 	temp.proto_f = NULL; 
-	temp.proto_l = NULL; 
+	temp.proto_l = 0; 
 	temp.def_f = NULL;
-	temp.def_s = NULL; 
-	temp.def_e = NULL; 
+	temp.def_s = 0; 
+	temp.def_e = 0; 
 	temp.call_f = malloc(100* sizeof * temp.call_f); 
 	temp.call_l = malloc(100 * sizeof * temp.call_l);
 	temp.call_iterator = 0;
 	all_data[data_size] = temp;
 	data_size++;
-	free(temp.call_f);
-	free(temp.call_l);
  }
 void store_add_proto(char* fun_name, int line, char* file)
 {

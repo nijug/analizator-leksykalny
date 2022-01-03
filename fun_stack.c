@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include "fun_stack.h"
 #include<stdio.h>
 #include<stdlib.h>
@@ -18,8 +19,10 @@ stack_t top;
 
 void put_on_fun_stack( int par_level, char *funame )
 {
-    char *funcopy = malloc( (strlen(funame)+1) * sizeof (char));
-		strcpy(funcopy, funame);
+
+	char *funcopy = malloc( (strlen(funame)+1) * sizeof (char));
+	strcpy(funcopy, funame);
+
 
 	if( top == NULL)
 	{

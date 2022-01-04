@@ -37,13 +37,15 @@ lexem_t alex_nextLexem( void ) {
                         ident[i] = '\0';
         ungetc(c,ci);
       return IDENT;
-                } else if( c == '"' ) {
+    } else if( c == '"' ) {
       
       int cp = c;
-                        while( (c= fgetc(ci)) != EOF && c != '"' && cp == '\\' ) {
-                                cp = c;
+      while( (c= fgetc(ci)) != '"') {
+      		cp = c;
+		if( c == EOF )
+			break;
       }
-      return c==EOF ? EOFILE : OTHER;
+      return c == EOF ? EOFILE : OTHER;
     } else if( c == '/' ) {
      
                 } if( isdigit( c ) || c == '.' ) {

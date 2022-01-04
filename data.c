@@ -129,7 +129,7 @@ void write_data() // dane przechowywane globalnie, wystarczy wywolac funkcje na 
 		
 		printf(" Prototyp:\n");
 		if (all_data[i].proto_f == NULL)
-			printf("  brak");
+			printf("  brak\n");
 		else
 			printf("  plik %s od linia %d do linia %d\n", all_data[i].proto_f, all_data[i].proto_l, all_data[i].proto_l);
 		
@@ -138,7 +138,7 @@ void write_data() // dane przechowywane globalnie, wystarczy wywolac funkcje na 
 		
 		printf(" Uzycie:\n");
 		if (all_data[i].call_iterator == 0)
-			printf("  brak");
+			printf("  brak\n");
 		else
 		{
 			for (int j = 0; j < all_data[i].call_iterator; j++)
@@ -151,7 +151,7 @@ void write_data() // dane przechowywane globalnie, wystarczy wywolac funkcje na 
 		printf(" Wywoluje:\n");
 		int start = find_def(all_data[i].name)-1;
 		if (history[start].type != 2)
-			printf("  brak");
+			printf("  brak\n");
 		else
 		{
 			int end = start;

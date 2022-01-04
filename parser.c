@@ -5,7 +5,6 @@
 
   int nbra = 0;   // bilans nawiasów klamrowych {}
   int npar = 0;   // bilans nawiasów zwykłych ()
-  int pocz = 0;
   alex_init4file (in);          // ustaw analizator leksykalny, aby czytał in
 
   lexem_t lex;
@@ -14,7 +13,6 @@
   while (lex != EOFILE) {
     switch (lex) {
     case IDENT:{
-        pocz = alex_getLN();
         char *iname = alex_ident ();   // zapamiętaj identyfikator i patrz co dalej
         lexem_t nlex = alex_nextLexem ();
         if (nlex == OPEPAR) {   // nawias otwierający - to zapewne funkcja
@@ -33,12 +31,16 @@
       npar++;
       break;
     case CLOPAR:{              // zamykający nawias - to może być koniec prototypu, nagłówka albo wywołania
-        if (top_of_funstack () == npar) {       // sprawdzamy, czy liczba nawiasów bilansuje się z wierzchołkiem stosu funkcji
+        if (top_of_funstack () == npar) 
+        {       // sprawdzamy, czy liczba nawiasów bilansuje się z wierzchołkiem stosu funkcji
                                                 // jeśli tak, to właśnie wczytany nawias jest domknięciem nawiasu otwartego
                                                 // za identyfikatorem znajdującym się na wierzchołku stosu
-          lexem_t nlex = alex_nextLexem ();     // bierzemy nast leksem
+          lexem_t nlex = alex_nextLexem ();// bierzemy nast leksem
           if (nlex == OPEBRA)   // nast. leksem to klamra a więc mamy do czynienia z def. funkcji
-            store_add_def (get_from_fun_stack (), pocz ,alex_getLN (), inpname);
+         {  
+            nbra++;
+            store_add_def (get_from_fun_stack (), alex_getLN (), inpname);
+         }
           else if (nbra == 0)   // nast. leksem to nie { i jesteśmy poza blokami - to musi być prototyp
             store_add_proto (get_from_fun_stack (), alex_getLN (), inpname);
           else                  // nast. leksem to nie { i jesteśmy wewnątrz bloku - to zapewne wywołanie
@@ -50,8 +52,10 @@
     case OPEBRA:
       nbra++;
       break;
-    case CLOBRA:
+    case CLOBRA:{
       nbra--;
+    def_end(alex_getLN());
+    }
       break;
     case ERROR:{
         fprintf (stderr, "\nBUUUUUUUUUUUUUUUUUUUUUU!\n"

@@ -27,6 +27,7 @@ int counter_exist(char* word, pair *counter, int counter_size);
 void create(char* fun_name);
 void store_add_proto(char* fun_name, int line, char* file);
 void store_add_call(char* fun_name, int line, char* file);
-void store_add_def(char* fun_name, int line_s, int line_e, char* file);
+void store_add_def(char* fun_name, int line_e, char* file);
+void definicji_end(int line);
 void write_data();
 #endif

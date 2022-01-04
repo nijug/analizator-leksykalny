@@ -97,7 +97,7 @@ void store_add_call(char* fun_name, int line, char* file)
 
 }
 
-void store_add_def(char* fun_name, int line_s, int line_e, char* file)
+void store_add_def(char* fun_name, int line_s, char* file)
 {
 	int i = exist(fun_name);
 	if (i == -1)
@@ -105,18 +105,29 @@ void store_add_def(char* fun_name, int line_s, int line_e, char* file)
 		create(fun_name);
 		all_data[data_size - 1].def_f = file;
 		all_data[data_size - 1].def_s = line_s;
-		all_data[data_size - 1].def_e = line_e;
 	}
 	else
 	{
 		all_data[i].def_f = file;
 		all_data[i].def_s = line_s;
-		all_data[i].def_e = line_e;
 	}
 	history[history_size].names = fun_name;
 	history[history_size].type = 1;
 	history_size++;
 
+}
+
+void def_end(int line)
+{
+    for (int i= history_size-1; i>=0; i--)
+    {
+        if (history[i].type==1)
+        {
+            int j=exist(history[i].names);
+            all_data[j].def_e=line;
+            return;
+        }
+    }
 }
 
 void write_data() // dane przechowywane globalnie, wystarczy wywolac funkcje na koniec main i zamknac program
@@ -149,21 +160,21 @@ void write_data() // dane przechowywane globalnie, wystarczy wywolac funkcje na 
 		}
 	
 		printf(" Wywoluje:\n");
-		int start = find_def(all_data[i].name)-1;
+		int start = find_def(all_data[i].name)+1;
 		if (history[start].type != 2)
 			printf("  brak\n");
 		else
 		{
 			int end = start;
-			while (history[end - 1].type == 2 && end - 1 >= 0)
-				end--;
+			while (history[end + 1].type == 2 && end +1  <= history_size)
+				end++;
 			if (end == start)
 				printf("%s\n", history[start].names);
 			else
 			{
 				pair counter[100];
 				int counter_size = 0;
-				for (int j = end; j <= start; j++)
+				for (int j = start; j <= end; j++)
 				{
 					int temp = counter_exist(history[j].names,counter,counter_size);
 					if (temp == -1)

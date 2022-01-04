@@ -2,27 +2,26 @@
 
 #include <ctype.h>
 
-static int ln = 0;
+static int ln=0;
 static char ident[256];
 static FILE *ci = NULL;
 
 void
 alex_init4file (FILE * in)
 {
-  ln = 0;
+  ln = 1;
   ci = in;
 }
 
 lexem_t alex_nextLexem( void ) {
   int c;
   while( (c= fgetc(ci)) != EOF ) {
-   
-    if( c == '\n' )
-	ln++;
+   if( c == '\n' )
+            ln++;
     else if( isspace( c ) )
-continue;
+                        continue;
     else if( c == '(' )
-        return OPEPAR;
+    return OPEPAR;
     else if( c == ')' )
       return CLOPAR;
     else if( c == '{' )
@@ -36,23 +35,22 @@ continue;
       while( isalnum( c= fgetc(ci) ) )
                                 ident[i++] = c;
                         ident[i] = '\0';
-        ungetc(c,ci);
+      ungetc(c,ci);
       return IDENT;
-    } else if( c == '"' ) {
+                } else if( c == '"' ) {
       
       int cp = c;
-      while( (c= fgetc(ci)) != '"') {
-      		cp = c;
-		if( c == EOF )
-			break;
+                        while( (c= fgetc(ci)) != EOF && c != '"' && cp == '\\' ) {
+                                cp = c;
       }
-      return c == EOF ? EOFILE : OTHER;
+      
+      return c==EOF ? EOFILE : OTHER;
     } else if( c == '/' ) {
      
                 } if( isdigit( c ) || c == '.' ) {
   
                 } else {
-               
+              
       return OTHER;
                 }
         }

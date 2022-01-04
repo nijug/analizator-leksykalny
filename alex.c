@@ -16,10 +16,11 @@ alex_init4file (FILE * in)
 lexem_t alex_nextLexem( void ) {
   int c;
   while( (c= fgetc(ci)) != EOF ) {
-    if( isspace( c ) )
-                        continue;
-                else if( c == '\n' )
-                        ln++;
+   
+    if( c == '\n' )
+	ln++;
+    else if( isspace( c ) )
+continue;
     else if( c == '(' )
         return OPEPAR;
     else if( c == ')' )

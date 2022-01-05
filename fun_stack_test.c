@@ -22,13 +22,13 @@ int main()
 	get_from_fun_stack();
 					//badanie skrajnych przypadków - próba pobrania danych z pustego stosu
 	if( get_from_fun_stack() == NULL )
-		printf("Zdejmowanie z pustego stosu: prawidłowe\n\n");
+		printf("Podjęcie próby zdejmowania z pustego stosu: prawidłowe\n\n");
 
-	for(i = 0; i<1000; i++)		//badanie skrajnych przypadków - próba przepełnienia stosu
+	for(i = 0; i<1001; i++)		//badanie skrajnych przypadków - próba przepełnienia stosu
 	{
-		put_on_fun_stack( 1, "name1" );
+		put_on_fun_stack( i, "name" );
 	}
-	if( top_of_funstack() == 1 )
+	if( top_of_funstack() == 1000 )
 		printf("Przepełnianie stosu: prawidłowe\nStos został zaimplementowany dynamicznie\n");	
 	
 	return EXIT_SUCCESS;

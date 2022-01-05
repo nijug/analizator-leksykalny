@@ -164,7 +164,7 @@ void write_data() // dane przechowywane globalnie, wystarczy wywolac funkcje na 
 		printf(" Wywoluje:\n");
 		int start = find_def(all_data[i].name)+1;
 		if (history[start].type != 2)
-			printf("  brak\n");
+			printf("  brak\n\n");
 		else
 		{
 			int end = start;
@@ -197,7 +197,7 @@ void write_data() // dane przechowywane globalnie, wystarczy wywolac funkcje na 
 				}
 				
 			}
-			
+			printf("\n");
 		}
 	
 	}

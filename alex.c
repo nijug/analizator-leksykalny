@@ -16,9 +16,10 @@ alex_init4file (FILE * in)
 lexem_t alex_nextLexem( void ) {
   int c;
   while( (c= fgetc(ci)) != EOF ) {
-   if( c == '\n' )
-            ln++;
-    else if( isspace( c ) )
+   if( c == '\n' ){
+	ln++;
+	continue;
+   }else if( isspace( c ) )
                         continue;
     else if( c == '(' )
     return OPEPAR;
@@ -35,8 +36,8 @@ lexem_t alex_nextLexem( void ) {
       while( isalnum( c= fgetc(ci) ) )
                                 ident[i++] = c;
                         ident[i] = '\0';
-      ungetc(c,ci);
-       
+      ungetc(c,ci); // ungetc nie zawsze zwraca znak do strumienia przez co w plikach testowych omijany jest ')'
+			//przez co printf nie sa odpowiednio zdejmowane ze stosu
       return IDENT;
      } else if( c == '"' ) {
       

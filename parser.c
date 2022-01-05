@@ -3,25 +3,23 @@
 
   FILE *in = fopen (inpname, "r");
 
-  int nbra = 0;   // bilans nawiasów klamrowych {}
-  int npar = 0;   // bilans nawiasów zwykłych ()
-  alex_init4file (in);          // ustaw analizator leksykalny, aby czytał in
+  int nbra = 0;   
+  int npar = 0;   
+  alex_init4file (in);        
 
   lexem_t lex;
 
-  lex = alex_nextLexem ();      // pobierz następny leksem
+  lex = alex_nextLexem ();   
   while (lex != EOFILE) {
     switch (lex) {
     case IDENT:{
-        char *iname = alex_ident ();   // zapamiętaj identyfikator i patrz co dalej
+        char *iname = alex_ident ();  
         lexem_t nlex = alex_nextLexem ();
-        if (nlex == OPEPAR) {   // nawias otwierający - to zapewne funkcja
+        if (nlex == OPEPAR) {   
           npar++;
-          put_on_fun_stack (npar,iname);       // odłóż na stos funkcji
-                                                // stos f. jest niezbędny, aby poprawnie obsłużyć sytuacje typu
-                                                // f1( 5, f2( a ), f3( b ) )
+          put_on_fun_stack (npar,iname);     
         }
-        else {                  // nie nawias, czyli nie funkcja
+        else {                  
           lex = nlex;
           continue;
         }
@@ -30,20 +28,18 @@
     case OPEPAR:
       npar++;
       break;
-    case CLOPAR:{              // zamykający nawias - to może być koniec prototypu, nagłówka albo wywołania
+    case CLOPAR:{             
         if (top_of_funstack () == npar) 
-        {       // sprawdzamy, czy liczba nawiasów bilansuje się z wierzchołkiem stosu funkcji
-                                                // jeśli tak, to właśnie wczytany nawias jest domknięciem nawiasu otwartego
-                                                // za identyfikatorem znajdującym się na wierzchołku stosu
-          lexem_t nlex = alex_nextLexem ();// bierzemy nast leksem
-          if (nlex == OPEBRA)   // nast. leksem to klamra a więc mamy do czynienia z def. funkcji
+        {                                              
+          lexem_t nlex = alex_nextLexem ();
+          if (nlex == OPEBRA)   
          {  
             nbra++;
             store_add_def (get_from_fun_stack (), alex_getLN (), inpname);
          }
-          else if (nbra == 0)   // nast. leksem to nie { i jesteśmy poza blokami - to musi być prototyp
+          else if (nbra == 0)  
             store_add_proto (get_from_fun_stack (), alex_getLN (), inpname);
-          else                  // nast. leksem to nie { i jesteśmy wewnątrz bloku - to zapewne wywołanie
+          else              
             store_add_call (get_from_fun_stack (), alex_getLN (), inpname);
         }
         npar--;
@@ -61,7 +57,7 @@
         fprintf (stderr, "\nBUUUUUUUUUUUUUUUUUUUUUU!\n"
                  "W pliku %s (linia %d) są błędy składni.\n"
                  "Kończę!\n\n", inpname, alex_getLN ());
-        exit (1);               // to nie jest najlepsze, ale jest proste ;-)
+        exit (1);              
       }
       break;
     default:

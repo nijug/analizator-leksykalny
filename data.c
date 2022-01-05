@@ -100,21 +100,23 @@ void store_add_call(char* fun_name, int line, char* file)
 void store_add_def(char* fun_name, int line_s, char* file)
 {
 	int i = exist(fun_name);
-	if (i == -1)
+	if( (strcmp( fun_name, "for") != 0) && (strcmp( fun_name, "while") != 0) && (strcmp( fun_name, "if") != 0) )
 	{
-		create(fun_name);
-		all_data[data_size - 1].def_f = file;
-		all_data[data_size - 1].def_s = line_s;
+		if (i == -1)
+		{
+			create(fun_name);
+			all_data[data_size - 1].def_f = file;
+			all_data[data_size - 1].def_s = line_s;
+		}
+		else
+		{
+			all_data[i].def_f = file;
+			all_data[i].def_s = line_s;
+		}
+		history[history_size].names = fun_name;
+		history[history_size].type = 1;
+		history_size++;
 	}
-	else
-	{
-		all_data[i].def_f = file;
-		all_data[i].def_s = line_s;
-	}
-	history[history_size].names = fun_name;
-	history[history_size].type = 1;
-	history_size++;
-
 }
 
 void def_end(int line)

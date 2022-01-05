@@ -1,6 +1,6 @@
 #include "alex.h"
 
-#include <ctype.h>
+#include<ctype.h>
 
 static int ln=0;
 static char ident[256];
@@ -36,6 +36,7 @@ lexem_t alex_nextLexem( void ) {
                                 ident[i++] = c;
                         ident[i] = '\0';
       ungetc(c,ci);
+       
       return IDENT;
      } else if( c == '"' ) {
       
